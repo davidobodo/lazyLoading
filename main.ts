@@ -16,12 +16,16 @@ function handleLazyLoad() {
             setTimeout(() => {
                 lazyImages.forEach(lazyImage => {
                     if (lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) {
+
                         lazyImage.parentElement.classList.remove("loading");
                         lazyImage.src = lazyImage.dataset.src;
 
-                        lazyImages = [...lazyImages].filter(function (image) {
+                        //remove the img already displaying from initial NodeList
+                        lazyImages = [...lazyImages].filter(image => {
                             return image !== lazyImage;
                         });
+
+                        console.log(lazyImages.length)
 
                         if (lazyImages.length === 0) {
                             document.removeEventListener("scroll", lazyLoad);
